@@ -1,7 +1,9 @@
+import bcrypt from "bcrypt";
 import { model, Schema } from 'mongoose';
-import { TUser } from './user.interface';
+import config from "../../config";
+import { TUser, userMethods, userModel } from './user.interface';
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<TUser,userModel,userMethods>({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -29,4 +31,32 @@ const userSchema = new Schema<TUser>({
     },
 });
 
-export const UserModel = model<TUser>('User', userSchema);
+userSchema.pre('save',async function(next){
+
+  //hashing password
+  this.password=await bcrypt.hash(this.password,Number(config.bycrypt_salt_rounds))
+    next()
+})
+
+userSchema.post('save',async function(doc,next){
+
+  doc.password=""
+  next();
+  
+})
+
+
+
+
+
+
+
+userSchema.methods.isUserExists= async function(_id:string){
+
+  const existingUser= await User.findOne({_id})
+  return existingUser;
+}
+
+
+
+export const User = model<TUser,userModel>('User', userSchema);

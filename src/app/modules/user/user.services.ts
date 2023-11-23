@@ -1,24 +1,30 @@
 import { TUser } from "./user.interface";
-import { UserModel } from "./user.model";
+import { User } from "./user.model";
 
 
 
-const createUSerIntoDB=async(user:TUser)=>{
+const createUSerIntoDB=async(userData:TUser)=>{
 
-    const result= await UserModel.create(user);
+    // const result= await User.create(user);
+    // return result;
+
+    const user= new User(userData);
+    
+    const result= await user.save();
     return result;
 
 }
 
 const getAllUserFromDB= async()=>{
-    const result= await UserModel.find().select('username fullName age email address');
+    const result= await User.find().select('username fullName age email address');
 
     return result;
 }
 
 const getSingleUserFromDB= async(_id:string)=>{
-    const result= await UserModel.findOne({_id});
+    const result= await User.findOne({_id}).select('-password');
     return result;
+    
 
 }
 
