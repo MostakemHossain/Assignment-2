@@ -29,6 +29,10 @@ const userSchema = new Schema<TUser,userModel,userMethods>({
             },
         ],
     },
+    // isDeleted:{
+    //   type:Boolean,
+    //   default:false
+    // }
 });
 
 userSchema.pre('save',async function(next){
@@ -40,7 +44,7 @@ userSchema.pre('save',async function(next){
 
 userSchema.post('save',async function(doc,next){
 
-  doc.password=""
+  doc.password="";
   next();
   
 })
@@ -51,9 +55,9 @@ userSchema.post('save',async function(doc,next){
 
 
 
-userSchema.methods.isUserExists= async function(_id:string){
+userSchema.methods.isUserExists= async function(id:string){
 
-  const existingUser= await User.findOne({_id})
+  const existingUser= await User.findOne({id})
   return existingUser;
 }
 

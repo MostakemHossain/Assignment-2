@@ -21,12 +21,13 @@ export type TUser = {
     productName: string;
     price: number;
     quantity: number;
-  }>;
+  }>,
+  // isDeleted: boolean;
 };
 
 
 export type userMethods={
-  isUserExists(_id: string): Promise<TUser | null>
+  isUserExists(id: string): Promise<TUser | null>
 }
 
 export type userModel= Model<TUser,Record<string, never>,userMethods>
