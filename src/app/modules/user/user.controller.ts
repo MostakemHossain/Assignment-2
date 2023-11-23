@@ -1,27 +1,23 @@
 import { Request, Response } from "express";
-import { userServices } from "./user.services";
+import { UserServices } from "./user.services";
 
-
-const createUser= async(req:Request, res:Response)=>{
+const createStudent= async (req:Request,res:Response)=>{
    try{
-    const user= req.body
+    const {user:userData}= req.body;
+    // will call service function to send this data
 
-
-    // call service function
-    const result= await userServices.createUserFromDB(user);
-    res.status(200).json({
-        success: true,
-        message:"User is Created successfully",
-        data:result,
-    })
-    
+    const result= await UserServices.createUSerIntoDB(userData);
+    res.status(200).json(({
+        success:true,
+        message:"User is created successfully",
+        data:result
+    }))
    }catch(err){
     console.log(err);
    }
+
 }
 
 export const userController={
-    createUser
-
+    createStudent
 }
-

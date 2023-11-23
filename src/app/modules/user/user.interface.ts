@@ -1,29 +1,23 @@
-
-export type FullName={
-    firstName: string;
-    lastName: string;
-  };
-export type Order={
-    productName: string;
-  price: number;
-  quantity: number;
-}
-export type Address= {
-    street: string;
-    city: string;
-    country: string;
-  };
-
-export type TUser={
+export type TUser = {
     userId: number;
-  username: string;
-  password: string;
-  fullName: FullName;
-  age: number;
-  email: string;
-  isActive: 'active' | 'inactive';
-  hobbies: string[];
-  address:Address;
-  orders: Order[];
-
-}
+    username: string;
+    password: string;
+    fullName: {
+      firstName: string;
+      lastName: string;
+    };
+    age: number;
+    email: string;
+    isActive: 'active' | 'inactive';
+    hobbies: string[];
+    address: {
+      street: string;
+      city: string;
+      country: string;
+    };
+    orders: Array<{
+      productName: string;
+      price: number;
+      quantity: number;
+    }>;
+  };
