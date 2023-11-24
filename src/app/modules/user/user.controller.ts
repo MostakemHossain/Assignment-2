@@ -8,7 +8,7 @@ const createStudent = async (req: Request, res: Response) => {
     // will call service function to send this data
 
     // data validation with zod
-    const validateData = userValidationSchema.parse(userData);
+     const validateData = userValidationSchema.parse(userData);
 
     const result = await UserServices.createUSerIntoDB(validateData);
     res.status(200).json({
